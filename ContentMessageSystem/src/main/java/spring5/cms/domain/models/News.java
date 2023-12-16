@@ -1,20 +1,38 @@
 package spring5.cms.domain.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Entity
+@Table(name="news")
 public class News {
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     String id;
     String title;
     String context;
+
+    @ManyToOne
     User author;
-    Set<User> mandatoryReviewers;
-    Set<Review> reviewers;
-    Set<Category> categories;
-    Set<Tag> tags;
+
+    @OneToMany
+    Set<User> mandatoryReviewers = new HashSet<>();
+
+    @ElementCollection
+    Set<Review> reviewers = new HashSet<>();
+
+    @OneToMany
+    Set<Category> categories = new HashSet<>();
+
+    @ElementCollection
+    Set<Tag> tags = new HashSet<>();
 
     public Review review(String userId, String status){
         final Review review = new Review(userId, status);
