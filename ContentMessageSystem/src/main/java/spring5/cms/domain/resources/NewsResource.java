@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring5.cms.domain.models.News;
 import spring5.cms.domain.models.Review;
+import spring5.cms.domain.service.NewsService;
 import spring5.cms.domain.vo.NewsRequest;
 
 import java.util.Arrays;
@@ -13,6 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/news")
 public class NewsResource {
+
+    private NewsService newsService;
+
+    public NewsResource(NewsService newsService){
+        this.newsService = newsService;
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<News> findOne(@PathVariable("id") String id) {
