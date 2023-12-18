@@ -1,21 +1,26 @@
 package spring5.cms.domain.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 @Data
-@Entity
-@Table(name ="category")
+@Document(collection = "category")
 public class Category {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     String id;
 
     String name;
+
+    @Builder
+    public static Category newCategory(String name) {
+        final Category category = new Category();
+        category.setId(UUID.randomUUID().toString());
+        category.setName(name);
+        return category;
+    }
 }

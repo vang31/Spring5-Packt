@@ -42,7 +42,7 @@ public class CategoryResource {
             @ApiResponse(code = 404, message = "Category not found")
     })
     public ResponseEntity<List<Category>> findAll() {
-        return ResponseEntity.ok(categoryService.findAll());
+        return ResponseEntity.ok(this.categoryService.findAll());
     }
 
     @PostMapping
@@ -52,7 +52,7 @@ public class CategoryResource {
             @ApiResponse(code = 404, message = "Category not found")
     })
     public ResponseEntity<Category> newCategory(CategoryRequest category) {
-        return new ResponseEntity<>(categoryService.create(category), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.categoryService.create(category), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -63,7 +63,7 @@ public class CategoryResource {
             @ApiResponse(code = 404, message = "Category not found")
     })
     public void removeCategory(@PathVariable("id") String id){
-        categoryService.delete(id);
+        this.categoryService.delete(id);
     }
 
     @PutMapping("/{id}")
@@ -75,7 +75,7 @@ public class CategoryResource {
             @ApiResponse(code = 400, message = "Invalid request")
     })
     public ResponseEntity<Category> updateCategory(@PathVariable("id") String id,
-                                                   CategoryRequest category) {
-        return new ResponseEntity<>(categoryService.update(id, category), HttpStatus.OK);
+                                                   Category category) {
+        return new ResponseEntity<>(new Category(), HttpStatus.OK);
     }
 }
